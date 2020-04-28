@@ -1,4 +1,5 @@
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as searchView from './views/searchView'
 import { elements, renderLoader, clearLoader } from './views/base';
 
@@ -10,6 +11,9 @@ import { elements, renderLoader, clearLoader } from './views/base';
  */
 const state = {};
 
+/** 
+ * SEARCH Controller 
+ */
 const controlSearch = async () => {
     //1. Get query from view
     // const query = 'pizza'; //TODO
@@ -39,3 +43,21 @@ elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     controlSearch();
 });
+
+elements.searchResPages.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-inline'); //closest method finds closest ancestor with the class
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto, 10); //get data-goto value
+        searchView.clearResults();
+        searchView.renderResults(state.search.result, goToPage);
+        console.log(goToPage);   
+    }
+});
+
+/**
+ * RECIPE Controller 
+ */
+const r = new Recipe(46956);
+r.getRecipe();
+console.log(r);
+
